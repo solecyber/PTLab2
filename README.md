@@ -2,6 +2,8 @@
 
 [![Django CI](https://github.com/solecyber/PTLab2/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/solecyber/PTLab2/actions/workflows/ci.yml)
 
+[Открыть магазин «Крой»](https://solecyber-ptlab2.onrender.com/)
+
 ## Задание
 
 **Вариант 10. Магазин одежды.** При одновременной покупке товаров двух и более

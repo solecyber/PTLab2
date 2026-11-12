@@ -98,7 +98,9 @@ class ShopTests(TestCase):
         self.assertEqual(item.unit_price, 1500)
         self.assertEqual(item.quantity, 1)
         self.assertNotIn(CART_KEY, self.client.session)
-        self.assertContains(self.client.get(reverse("receipt")), "Заказ оформлен")
+        receipt = self.client.get(reverse("receipt"))
+        self.assertContains(receipt, "Заказ оформлен")
+        self.assertContains(receipt, "Скидка 10%")
         self.assertEqual(Client().get(reverse("receipt")).status_code, 404)
 
     def test_retry_with_same_cart_does_not_duplicate_order(self):

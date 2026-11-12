@@ -6,7 +6,7 @@
   <p>Учебный заказ № {{ purchase.pk }}</p>
   <dl>
     <div><dt>Сумма товаров</dt><dd>{{ purchase.subtotal|floatformat:2 }} ₽</dd></div>
-    <div><dt>Скидка</dt><dd>{{ purchase.discount|floatformat:2 }} ₽</dd></div>
+    <div><dt>Скидка{% if purchase.discount %} 10%{% endif %}</dt><dd>{{ purchase.discount|floatformat:2 }} ₽</dd></div>
     <div class="total"><dt>Итого</dt><dd>{{ purchase.total|floatformat:2 }} ₽</dd></div>
   </dl>
   <a class="button" href="{% url 'index' %}">Вернуться в каталог</a>
