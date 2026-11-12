@@ -1,0 +1,22 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Крой — магазин одежды{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'shop/style.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="wordmark" href="{% url 'index' %}">КРОЙ</a>
+      <nav aria-label="Разделы магазина">
+        <a href="{% url 'index' %}">Каталог</a>
+        <a href="{% url 'cart' %}">Корзина{% if cart_count %} <span class="count">{{ cart_count }}</span>{% endif %}</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">{% block content %}{% endblock %}</main>
+</body>
+</html>

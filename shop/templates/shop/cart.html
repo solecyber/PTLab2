@@ -1,0 +1,54 @@
+{% extends 'shop/base.html' %}
+{% block title %}Корзина — Крой{% endblock %}
+{% block content %}
+<h1 class="page-title">Корзина</h1>
+{% if lines %}
+<div class="cart-layout">
+  <section class="cart-items" aria-label="Товары в корзине">
+    {% for line in lines %}
+    <article class="cart-item">
+      <div>
+        <p class="kind">{{ line.product.get_kind_display }}</p>
+        <h2>{{ line.product.name }}</h2>
+        <p>{{ line.product.price }} ₽ за штуку</p>
+      </div>
+      <div class="line-controls">
+        <strong>{{ line.total }} ₽</strong>
+        <form method="post" action="{% url 'update_product' line.product.pk %}" class="quantity">
+          {% csrf_token %}
+          <label for="quantity-{{ line.product.pk }}">Количество</label>
+          <input id="quantity-{{ line.product.pk }}" type="number" name="quantity" min="1" max="{{ max_quantity }}" value="{{ line.quantity }}" required>
+          <button class="button outline" type="submit">Обновить</button>
+        </form>
+        <form method="post" action="{% url 'update_product' line.product.pk %}">
+          {% csrf_token %}
+          <input type="hidden" name="quantity" value="0">
+          <button class="link-button" type="submit" aria-label="Удалить {{ line.product.name }}">Удалить</button>
+        </form>
+      </div>
+    </article>
+    {% endfor %}
+    <a class="back-link" href="{% url 'index' %}">Продолжить покупки</a>
+  </section>
+  <section class="summary" aria-labelledby="order-title">
+    <h2 id="order-title">Ваш заказ</h2>
+    <dl>
+      <div><dt>Сумма товаров</dt><dd>{{ totals.subtotal|floatformat:2 }} ₽</dd></div>
+      <div><dt>Скидка{% if totals.discount %} 10%{% endif %}</dt><dd>{% if totals.discount %}−{% endif %}{{ totals.discount|floatformat:2 }} ₽</dd></div>
+      <div class="total"><dt>Итого</dt><dd>{{ totals.total|floatformat:2 }} ₽</dd></div>
+    </dl>
+    <form method="post" action="{% url 'checkout' %}" class="checkout">
+      {% csrf_token %}
+      <p class="demo-note">Учебный заказ. Укажи вымышленные имя и адрес.</p>
+      {{ form.as_p }}
+      <button class="button" type="submit">Оформить заказ</button>
+    </form>
+  </section>
+</div>
+{% else %}
+<div class="empty">
+  <p>Корзина пока пуста.</p>
+  <a class="button" href="{% url 'index' %}">Перейти в каталог</a>
+</div>
+{% endif %}
+{% endblock %}
