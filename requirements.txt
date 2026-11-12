@@ -1,9 +1,5 @@
-django
-psycopg2
-dj-database-url
-gunicorn
-whitenoise
-django-heroku
-pytz
-sqlparse
-pyyaml
+Django>=5.2.8,<5.3
+gunicorn>=23,<27
+whitenoise>=6.8,<7
+dj-database-url>=2.3,<4
+psycopg[binary]>=3.2,<4

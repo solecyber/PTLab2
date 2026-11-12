@@ -1,26 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Товары</title>
-</head>
-<body>
-    <div>
-        <h3>Список</h3>
-        <table>
-            <tr>
-                <td><p>Наименование</p></td>
-                <td><p>Цена</p></td>
-                <td></td>
-            </tr>
-            {% for p in products %}
-                <tr>
-                    <td><p>{{ p.name }}</p></td>
-                    <td><p>{{ p.price }}</p></td>
-                    <td><p><a href="/buy/{{ p.id }}">Купить</a></p></td>
-                </tr>
-            {% endfor %}
-        </table>
-    </div>
-</body>
-</html>
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <h1>Одежда на каждый день</h1>
+    <p>Скидка 10% на всю корзину, если в ней есть одежда разных видов.</p>
+    <a class="button hero-button" href="#catalog">Смотреть каталог</a>
+  </div>
+  <div class="hero-media">
+    <img src="{% static 'shop/clothing.jpg' %}" alt="Рубашки, свитер и брюки на вешалке" width="1448" height="1086">
+  </div>
+</section>
+<section id="catalog" class="catalog">
+  <h2>Каталог</h2>
+  <ul class="product-grid">
+    {% for product in products %}
+    <li class="product">
+      <p class="kind">{{ product.get_kind_display }}</p>
+      <h3>{{ product.name }}</h3>
+      <div class="product-actions">
+        <strong>{{ product.price }} ₽</strong>
+        <form method="post" action="{% url 'buy' product.pk %}">
+          {% csrf_token %}
+          <button class="button outline" type="submit" aria-label="В корзину: {{ product.name }}">В корзину</button>
+        </form>
+      </div>
+    </li>
+    {% empty %}
+    <li>В каталоге пока нет товаров.</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

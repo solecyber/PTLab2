@@ -1,0 +1,14 @@
+{% extends 'shop/base.html' %}
+{% block title %}Заказ оформлен — Крой{% endblock %}
+{% block content %}
+<h1 class="page-title">Заказ оформлен</h1>
+<div class="receipt">
+  <p>Учебный заказ № {{ purchase.pk }}</p>
+  <dl>
+    <div><dt>Сумма товаров</dt><dd>{{ purchase.subtotal|floatformat:2 }} ₽</dd></div>
+    <div><dt>Скидка</dt><dd>{{ purchase.discount|floatformat:2 }} ₽</dd></div>
+    <div class="total"><dt>Итого</dt><dd>{{ purchase.total|floatformat:2 }} ₽</dd></div>
+  </dl>
+  <a class="button" href="{% url 'index' %}">Вернуться в каталог</a>
+</div>
+{% endblock %}
